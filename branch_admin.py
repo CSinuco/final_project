@@ -1,7 +1,7 @@
 #admin
 class Admin:
     _instance = None
-    #comprueba si no hay instancia la crea, si hay la retorna
+
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
@@ -12,6 +12,8 @@ class Admin:
         if not self._initialized:
             self.name = name
             self._initialized = True
-    #Retornamos el nombre del admin (futuramente aplicar el proxy)
-    def display_name(self):
-        return f"Admin name: {self.name}"
+
+    def create_branch(self, prototype, new_address):
+        branch = prototype.clone()
+        branch.direccion = new_address
+        return branch
