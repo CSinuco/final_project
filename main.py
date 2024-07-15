@@ -1,5 +1,5 @@
 from admin import Admin
-from tienda import ConcreteBranch
+from tienda import Branch
 from state import FullState, EmptyState
 from visitor import Camion
 
@@ -7,7 +7,7 @@ from visitor import Camion
 admin = Admin("Alice")
 
 # Prototipo de la tienda principal
-tienda_prototype = ConcreteBranch("Tienda Central", "Calle Principal 123")
+tienda_prototype = Branch("Tienda Central", "Calle Principal 123")
 
 # Crear nuevas sucursales usando el prototipo
 sucursal1 = admin.create_branch(tienda_prototype, "Calle Secundaria 456")
