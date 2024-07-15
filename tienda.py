@@ -28,7 +28,7 @@ class Tienda(ABC):
     def accept(self, visitor: Visitor):
         visitor.visit(self)
 
-class ConcreteBranch(Tienda):
+class Branch(Tienda):
     def __init__(self, nombre, direccion):
         super().__init__(nombre, direccion)
 
