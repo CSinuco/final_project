@@ -1,11 +1,5 @@
-from abc import ABC, abstractmethod
+from state import Full, Empty
 
-class Visitor(ABC):
-    @abstractmethod
-    def visit(self, tienda):
-        pass
-
-class Camion(Visitor):
-    def visit(self, tienda):
-        print(f"Camion visitando la tienda {tienda.nombre} en {tienda.direccion}")
-        tienda.set_state(tienda.full_state)
+class Truck:
+    def visit(self, store, state):
+        state.handle(store)

@@ -1,16 +1,12 @@
-from abc import ABC, abstractmethod
+class State:
+    pass
 
-class State(ABC):
-    @abstractmethod
-    def handle(self, tienda):
-        pass
+class Full(State):
+    def handle(self, store):
+        store.set_state(self)
+        print("Store is now full.")
 
-class FullState(State):
-    def handle(self, tienda):
-        print(f"La tienda {tienda.nombre} en {tienda.direccion} está llena de productos.")
-        tienda.set_state(self)
-
-class EmptyState(State):
-    def handle(self, tienda):
-        print(f"La tienda {tienda.nombre} en {tienda.direccion} está vacía de productos.")
-        tienda.set_state(self)
+class Empty(State):
+    def handle(self, store):
+        store.set_state(self)
+        print("Store is now empty.")

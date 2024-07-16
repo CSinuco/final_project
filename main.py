@@ -1,29 +1,32 @@
 from admin import Admin
-from tienda import Branch
-from state import FullState, EmptyState
-from visitor import Camion
+from store import ConcreteStore
+from state import Full, Empty
+from visitor import Truck
+from client import Client
 
-# Crear la instancia única de Admin
-admin = Admin("Alice")
+def main():
+    # Crear admin y prototipos de tiendas
+    admin = Admin()
+    store_prototype = ConcreteStore("Prototype Address")
+    admin.register_prototype("ConcreteStore", store_prototype)
 
-# Prototipo de la tienda principal
-tienda_prototype = Branch("Tienda Central", "Calle Principal 123")
+    # Crear una tienda concreta
+    store1 = admin.create_store("ConcreteStore", "123 Main St")
+    store2 = admin.create_store("ConcreteStore", "456 Oak St")
 
-# Crear nuevas sucursales usando el prototipo
-sucursal1 = admin.create_branch(tienda_prototype, "Calle Secundaria 456")
-sucursal2 = admin.create_branch(tienda_prototype, "Avenida Tercera 789")
+    # Crear cliente y agregarlo como observador
+    client = Client()
+    store1.add_observer(client)
+    store1.add_observer(admin)
 
-# Verificar estados iniciales de las sucursales
-sucursal1.check_state()  # Output: La tienda Tienda Central en Calle Secundaria 456 está vacía de productos.
-sucursal2.check_state()  # Output: La tienda Tienda Central en Avenida Tercera 789 está vacía de productos.
+    # Crear camion y cambiar estados
+    truck = Truck()
 
-# Crear instancia de Camion (Visitor)
-camion = Camion()
+    # Llenar la tienda
+    truck.visit(store1, Full())
+    # Vaciar la tienda
+    truck.visit(store1, Empty())
 
-# El Camion visita las sucursales y cambia su estado a lleno
-sucursal1.accept(camion)
-sucursal2.accept(camion)
+if __name__ == "__main__":
+    main()
 
-# Verificar estados después de la visita del Camion
-sucursal1.check_state()  # Output: La tienda Tienda Central en Calle Secundaria 456 está llena de productos.
-sucursal2.check_state()  # Output: La tienda Tienda Central en Avenida Tercera 789 está llena de productos.
